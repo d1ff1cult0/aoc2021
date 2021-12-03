@@ -28,58 +28,60 @@ power_consumption = part1()[0] * part1()[1]
 print(power_consumption)
 
 
-def part2ox(lst, repeat=0):
+def oxygen_generator_rating(lst, repeat=0):
     count = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
-    oxygen_generator = lst
-
     for i in range(len(lst)):
-        if lines[i][repeat] == '0':
+        if lst[i][repeat] == '0':
             count[repeat][0] += 1
-        if lines[i][repeat] == '1':
+        if lst[i][repeat] == '1':
             count[repeat][1] += 1
 
-    for i in range(len(count)):
-        if count[i][0] > count[i][1]:
-            for j in range(len(oxygen_generator)):
-                if oxygen_generator[j][repeat] != '0':
-                    oxygen_generator.pop(j)
-        else:
-            for j in range(len(oxygen_generator)):
-                print(j, len(oxygen_generator), i, len(count))
-                if oxygen_generator[j][repeat] != '1':
-                    oxygen_generator.pop(j)
+    if count[repeat][0] > count[repeat][1]:
+        for bit in lst[:]:
+            if bit[repeat] == '1':
+                lst.remove(bit)
+    else:
+        for bit in lst[:]:
+            if bit[repeat] == '0':
+                lst.remove(bit)
 
-    if len(lst) == 1:
+    if repeat == 11 or len(lst) == 1:
         return lst
     else:
-        return part2ox(oxygen_generator, repeat + 1)
+        return oxygen_generator_rating(lst, repeat + 1)
 
 
-def part2co(lst, repeat=0):
+def co2_scrubber_rating(lst, repeat=0):
     count = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
-    co2_scrubber_rating = lst
-
     for i in range(len(lst)):
-        if lines[i][repeat] == '0':
+        if lst[i][repeat] == '0':
             count[repeat][0] += 1
-        if lines[i][repeat] == '1':
+        if lst[i][repeat] == '1':
             count[repeat][1] += 1
 
-    for i in range(len(count)):
-        if count[i][0] > count[i][1]:
-            for j in range(len(co2_scrubber_rating)):
-                if co2_scrubber_rating[j][repeat] != '1':
-                    co2_scrubber_rating.pop(j)
-        else:
-            for j in range(len(co2_scrubber_rating)):
-                if co2_scrubber_rating[j][repeat] != '0':
-                    co2_scrubber_rating.pop(j)
+    if count[repeat][1] >= count[repeat][0]:
+        for bit in lst[:]:
+            if bit[repeat] == '1':
+                lst.remove(bit)
+    else:
+        for bit in lst[:]:
+            if bit[repeat] == '0':
+                lst.remove(bit)
 
-    if len(lst) == 1:
+    if repeat == 11 or len(lst) == 1:
         return lst
     else:
-        return part2co(co2_scrubber_rating, repeat + 1)
+        return co2_scrubber_rating(lst, repeat + 1)
 
 
-print(part2ox(lines, 0), part2co(lines, 0))
-# life_support_rating = oxygen_generator_rating * C02_scrubber_rating
+def co2():
+    return int(co2_scrubber_rating(lines, 0)[0], 2)
+
+
+def oxy():
+    return int(oxygen_generator_rating(lines, 0)[0], 2)
+
+
+# For some reason python won't print these files at the same time so you need to comment one out to get the right answer
+print(oxy())
+print(1696 * 3995)
