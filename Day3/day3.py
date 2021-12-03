@@ -2,6 +2,8 @@ with open("input.txt") as file:
     lines = file.readlines()
     lines = [line.rstrip() for line in lines]
 
+oxylines = lines.copy()
+co2lines = lines.copy()
 
 def part1():
     count = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
@@ -75,13 +77,13 @@ def co2_scrubber_rating(lst, repeat=0):
 
 
 def co2():
-    return int(co2_scrubber_rating(lines, 0)[0], 2)
+    return int(''.join(co2_scrubber_rating(co2lines, 0)), 2)
 
 
 def oxy():
-    return int(oxygen_generator_rating(lines, 0)[0], 2)
+    return int(''.join(oxygen_generator_rating(oxylines, 0)), 2)
 
 
 # For some reason python won't print these files at the same time so you need to comment one out to get the right answer
-print(oxy())
+print(oxy(), co2())
 print(1696 * 3995)
