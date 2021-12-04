@@ -85,5 +85,6 @@ def oxy():
 
 
 # For some reason python won't print these files at the same time so you need to comment one out to get the right answer
-print(oxy(), co2())
-print(1696 * 3995)
+array = [oxy(), co2()]
+print(array[0], array[1])
+print(array[0]*array[1])
