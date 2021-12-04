@@ -63,8 +63,8 @@ function check_win(board, row, column, prev){
             if(new_boards[board][i][k] === -1){
                 h++
                 if(h === 5){
-                    console.log(new_boards[j], 1)
-                    bingo_found(j, row, column, prev)
+                    new_boards.slice(board, 1)
+                    bingo_found(board, row, column, prev)
                 }
             }
         }
@@ -75,45 +75,16 @@ function check_win(board, row, column, prev){
         if(new_boards[board][i][column] === -1){
             v++
             if(v === 5){
-                console.log(new_boards[board], 2)
+                new_boards.slice(board, 1)
                 bingo_found(board, row, column, prev)
             }
         }
-    }
-    //Rechtsonder
-    let ro = 0
-    let i = 0
-    let j = 0
-    while(i<5 && j<5){
-        if(new_boards[board][i][j] === -1){
-            ro++
-            if(ro === 5){
-                console.log(new_boards[board], 3)
-                bingo_found(board, row, column, prev)
-            }
-        }
-        i++
-        j++
-    }
-    //Rechtsboven
-    let rb = 0
-    i = 0
-    j = 4
-    while(i<5 && j>=0){
-        if(new_boards[board][i][j] === -1){
-            rb++
-            if(rb === 5){
-                console.log(new_boards[board],4)
-                bingo_found(board, row, column, prev)
-            }
-        }
-        i++
-        j--
     }
 }
 
 function bingo_found(which_board, wrow, wcolumn, wprev){
     let sum = 0
+
     for(let i = 0; i<5; i++){
         for(let j = 0; j<5; j++){
             if(new_boards[which_board][i][j] !== -1){
@@ -121,10 +92,11 @@ function bingo_found(which_board, wrow, wcolumn, wprev){
             }
         }
     }
-    console.log(sum, new_boards[which_board][wrow][wcolumn])
-    sum = sum*wprev
-    console.log(sum)
-    stop()
+    if(sum !== 0){
+        sum = sum*wprev
+        console.log(new_boards)
+        console.log(sum)
+    }
 }
 
 draw_number()
